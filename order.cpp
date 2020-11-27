@@ -40,16 +40,16 @@ void order::on_pushButton_oentry_clicked()
     oddate = ui->dateEdit_od->date().toString("dd/MM/yyyy");
     ordtype = ui->lineEdit_otype->text();
     if(!s.connOpen()){
-        qDebug()<<"connection failed";
+        qDebug()<<"Ошибка соединения";
     }
     s.connOpen();
     QSqlQuery qrys;
     qrys.prepare("insert into table_order(oid,dname,ocompny,osupplier,oqnty,ocprice,odate,odtype) values('"+orid+"','"+odname+"','"+ocmpnyname+"','"+orsupplier+"','"+oquntity+"','"+ocprice+"','"+oddate+"','"+ordtype+"')");
     if(qrys.exec()){
-        QMessageBox::information(this,tr("Save"),tr("Saved"));
+        QMessageBox::information(this,tr("Сохранение"),tr("Сохранено"));
         s.connClose();
     }else{
-        QMessageBox::critical(this,tr("error::"),qrys.lastError().text());
+        QMessageBox::critical(this,tr("Ошибка::"),qrys.lastError().text());
 }
 
 }
@@ -82,10 +82,10 @@ void order::on_pushButton_dentry_clicked()
             QSqlQuery qrys;
             qrys.prepare("delete from table_order where oid='"+orid+"'");
             if(qrys.exec()){
-                QMessageBox::critical(this,tr("Delete"),tr("Deleted"));
+                QMessageBox::critical(this,tr("Удаление"),tr("Удалено"));
                 s.connClose();
             }else{
-                QMessageBox::critical(this,tr("error::"),qrys.lastError().text());
+                QMessageBox::critical(this,tr("Ошибка::"),qrys.lastError().text());
             }
 
 }

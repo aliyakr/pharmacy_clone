@@ -23,7 +23,7 @@ void LOGIN::on_pushButton_login_clicked()
     QString password = ui->lineEdit_pwd->text();
     conn.connOpen();
     if(!conn.connOpen()){
-        qDebug()<<"failed to open";
+        qDebug()<<"Ошибка открытия";
         return;
     }
     QSqlQuery qry;
@@ -39,7 +39,7 @@ void LOGIN::on_pushButton_login_clicked()
             dsh = new Dashboard(this);
             dsh->show();
         }else {
-        QMessageBox::warning(this,"Login","UserName and Password incorrect");
+        QMessageBox::warning(this,"Login","Неправильный логин и пароль");
     }
     }
 

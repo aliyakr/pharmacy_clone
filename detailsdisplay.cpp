@@ -90,7 +90,7 @@ void detailsdisplay::on_pushButton_reset_clicked()
 {
     Stocks s;
      if(!s.connOpen()){
-                 qDebug()<<"connection failed";
+                 qDebug()<<"Ошибка соединения";
              }
              s.connOpen();
              QSqlQuery qrys,qry;
@@ -109,7 +109,7 @@ void detailsdisplay::on_pushButton_reset_2_clicked()
 {
     Stocks s;
      if(!s.connOpen()){
-                 qDebug()<<"connection failed";
+                 qDebug()<<"Ошибка соединения";
              }
              s.connOpen();
              QSqlQuery qrys,qry,qr,q;

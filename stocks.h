@@ -22,7 +22,7 @@ public:
     }
     bool connOpen(){
         mydb2 = QSqlDatabase::addDatabase("QSQLITE") ;
-       mydb2.setDatabaseName("H:/PHARMA.db");
+       mydb2.setDatabaseName("pharma.db");
        if(!mydb2.open()){
            qDebug()<<("Database failed to connect");
            return false;

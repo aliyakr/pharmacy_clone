@@ -38,16 +38,16 @@ void regular::on_pushButton_back_2_clicked()
     raddress = ui->lineEdit_address->text();
 
     if(!s.connOpen()){
-        qDebug()<<"connection failed";
+        qDebug()<<"Ошибка соединения";
     }
     s.connOpen();
     QSqlQuery qrys;
     qrys.prepare("insert into table_regular(id,name,drug_name,phone_number,cost,due,address) values('"+rid+"','"+rname+"','"+rdname+"','"+rphmn+"','"+rcost+"','"+rdue+"','"+raddress+"')");
     if(qrys.exec()){
-        QMessageBox::critical(this,tr("Save"),tr("Saved"));
+        QMessageBox::critical(this,tr("Сохранение"),tr("Сохранено"));
         s.connClose();
     }else{
-        QMessageBox::critical(this,tr("error::"),qrys.lastError().text());
+        QMessageBox::critical(this,tr("Ошибка::"),qrys.lastError().text());
 }
 
 }
@@ -94,15 +94,15 @@ void regular::on_pushButton_back_3_clicked()
     rdue = ui->lineEdit_due->text();
 
     if(!s.connOpen()){
-        qDebug()<<"connection failed";
+        qDebug()<<"Ошибка соединения";
     }
     s.connOpen();
     QSqlQuery qrys;
     qrys.prepare("update table_regular set due= due+'"+rdue+"' where id='"+rid+"')");
     if(qrys.exec()){
-        QMessageBox::critical(this,tr("Save"),tr("Saved"));
+        QMessageBox::critical(this,tr("Сохрение"),tr("Сохранено"));
         s.connClose();
     }else{
-        QMessageBox::critical(this,tr("error::"),qrys.lastError().text());
+        QMessageBox::critical(this,tr("Ошибка::"),qrys.lastError().text());
 }
 }

@@ -37,7 +37,7 @@ void selldetails::on_pushButton_pressed()
     Stocks s ;
      QString val = ui->lineEdit_search->text();
      if(!s.connOpen()){
-         qDebug()<<"failed to connect to database";
+         qDebug()<<"Ошибка соединения с базой данной";
          return;
      }
 
@@ -53,7 +53,7 @@ void selldetails::on_pushButton_pressed()
              ui->lineEdit_name->setText(qry.value(2).toString());
             if(qry.value(3).toInt()<=0)
             {
-                QMessageBox::critical(this,tr("Quantity"),tr("Out of Stock"));
+                QMessageBox::critical(this,tr(" "),tr("нет в наличии"));
             }else {
                  ui->label_5->setText(qry.value(3).toString());
               }
@@ -64,7 +64,7 @@ void selldetails::on_pushButton_pressed()
 
      }
      else {
-       QMessageBox::critical(this,tr("Quantity"),tr("Out of Stock"));
+       QMessageBox::critical(this,tr(" "),tr("нет в наличии"));
      }
 }
 
@@ -94,7 +94,7 @@ void selldetails::on_pushButton_add_clicked()
     qry2.prepare("update table_salerecord set total = (qnty*price)-(qnty*price*discount*0.01) ");
     qr.prepare("update table_stock set dqnty = dqnty - (select qnty from table_sell) where did = '"+id+"' ");
     if(qrys.exec()){
-        QMessageBox::critical(this,tr("Save"),tr("Saved"));
+        QMessageBox::critical(this,tr("Сохранение"),tr("Сохранено"));
         qry1.exec();
         qry2.exec();
         qry.exec();
@@ -102,7 +102,7 @@ void selldetails::on_pushButton_add_clicked()
         qry2.exec();
         s.connClose();
     }else{
-        QMessageBox::critical(this,tr("error::"),qrys.lastError().text());
+        QMessageBox::critical(this,tr("Ошибка::"),qrys.lastError().text());
     }
 
 
@@ -126,16 +126,16 @@ void selldetails::on_pushButton_reset_clicked()
 {
    Stocks s;
     if(!s.connOpen()){
-                qDebug()<<"connection failed";
+                qDebug()<<"Ошибка соединения";
             }
             s.connOpen();
             QSqlQuery qrys;
             qrys.prepare("delete from table_billrecord ");
             if(qrys.exec()){
-                QMessageBox::information(this,tr("Reset"),tr("Reseted"));
+                QMessageBox::information(this,tr("Перезапуск"),tr("Перезапущено"));
                s. connClose();
             }else{
-                QMessageBox::critical(this,tr("error::"),qrys.lastError().text());
+                QMessageBox::critical(this,tr("Ошибка::"),qrys.lastError().text());
             }
 }
 
@@ -165,16 +165,16 @@ void selldetails::on_pushButton_saveinfo_clicked()
      sdate = ui->dateEdit->date().toString("dd/MM/yyyy");
      stotal= ui->lineEdit_total->text();
         if(!s.connOpen()){
-        qDebug()<<"connection failed";
+        qDebug()<<"Ошибка соединения";
     }
     s.connOpen();
     QSqlQuery qrys;
     qrys.prepare("insert into table_sellcomplete(bill_no,customer_name,date,total_amnt) values('"+billno+"','"+cname+"','"+sdate+"','"+stotal+"');");
     if(qrys.exec()){
-        QMessageBox::critical(this,tr("Save"),tr("Saved"));
+        QMessageBox::critical(this,tr("Сохранение"),tr("Сохранено"));
         s.connClose();
     }else{
-        QMessageBox::critical(this,tr("error::"),qrys.lastError().text());
+        QMessageBox::critical(this,tr("Ошибка::"),qrys.lastError().text());
     }
 }
 QString escCSV(QString unexc)
@@ -197,14 +197,10 @@ bool selldetails:: queryToCsv()
 
     qry->exec();
     modal->setQuery(*qry);
-    QFile csvFile("C:/Users/Sandeep/Desktop/bill.csv");
-    if (!csvFile.open(QFile::WriteOnly | QFile::Text)){
-        qDebug("Failed to open csv file");
-    }
     QSqlRecord r;
-    QTextStream writer(&csvFile);
+    
     QStringList t;
-    t  << "id" << "dname"<<"qnty"<< "discount"<<"price"<<"total";
+    t  << "id" << "dname" << "qnty" << "discount" << "price" << "total";
     writer << t.join(',')+"\n";
     t.clear();
     for (int i = 0; i < modal->rowCount(); i++) {
@@ -214,7 +210,6 @@ bool selldetails:: queryToCsv()
         t.clear();
     }
 
-    csvFile.close();
     return true;
  }
 
@@ -223,10 +218,10 @@ void selldetails::on_pushButton_print_clicked()
             if(!queryToCsv())
             {
 
-                QMessageBox::information(this,tr("Error!"),tr("Database File Not Exported."));
+                QMessageBox::information(this,tr("Ошибка!"),tr("Ошибка файла базы данных."));
             }
             else {
-                QMessageBox::information(this,tr(""),tr("Database File Exported."));
+                QMessageBox::information(this,tr(""),tr("База данных подключена"));
             }
 
 }

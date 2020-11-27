@@ -42,17 +42,17 @@ void Stocks::on_pushButton_entrybtn_clicked()
             drtype = ui->lineEdit_dtype->text();
             drcp = ui->lineEdit_costprice->text();
             if(!connOpen()){
-                qDebug()<<"connection failed";
+                qDebug()<<" ";
             }
             connOpen();
             QSqlQuery qrys;
             qrys.prepare("insert into table_stock(did,dname,dcmpny,dqnty,dprice,dsenty,dexpiry,dtype,dcp) values('"+drid+"'"
             ",'"+drname+"','"+drcmpny+"','"+drqnty+"','"+drpri+"','"+drsentry+"','"+drexpdate+"','"+drtype+"','"+drcp+"')");
             if(qrys.exec()){
-                QMessageBox::critical(this,tr("Save"),tr("Saved"));
+                QMessageBox::critical(this,tr("Сохранение"),tr("Сохранено"));
                 connClose();
             }else{
-                QMessageBox::critical(this,tr("error::"),qrys.lastError().text());
+                QMessageBox::critical(this,tr("Ошиюка::"),qrys.lastError().text());
             }
 
 }
@@ -85,16 +85,16 @@ void Stocks::on_pushButton_updbtn_clicked()
             drtype = ui->lineEdit_dtype->text();
             drcp = ui->lineEdit_costprice->text();
             if(!connOpen()){
-                qDebug()<<"connection failed";
+                qDebug()<<"Ошибка соединения";
             }
             connOpen();
             QSqlQuery qrys;
             qrys.prepare("update table_stock set dname='"+drname+"',dcmpny='"+drcmpny+"',dqnty='"+drqnty+"',dprice='"+drpri+"',dsenty='"+drsentry+"',dexpiry='"+drexpdate+"',dtype='"+drtype+"',dcp='"+drcp+"' where did='"+drid+"'");
             if(qrys.exec()){
-                QMessageBox::critical(this,tr("Save"),tr("Saved"));
+                QMessageBox::critical(this,tr("Сохранение"),tr("Сохранено"));
                 connClose();
             }else{
-                QMessageBox::critical(this,tr("error::"),qrys.lastError().text());
+                QMessageBox::critical(this,tr("Ошибка::"),qrys.lastError().text());
             }
 
 
@@ -106,7 +106,7 @@ void Stocks::on_pushButton_2_clicked()
             drid = ui->lineEdit_did->text();
 
             if(!connOpen()){
-                qDebug()<<"connection failed";
+                qDebug()<<"Ошибка соединения";
             }
             connOpen();
             QSqlQuery qrys,qry;
@@ -114,10 +114,10 @@ void Stocks::on_pushButton_2_clicked()
             qry.prepare("UPDATE SQLITE_SEQUENCE SET SEQ=0 WHERE NAME='table_stock'");
             if(qrys.exec()){
                 qry.exec();
-                QMessageBox::critical(this,tr("Delete"),tr("Deleted"));
+                QMessageBox::critical(this,tr("Удаленение"),tr("Удалено"));
                 connClose();
             }else{
-                QMessageBox::critical(this,tr("error::"),qrys.lastError().text());
+                QMessageBox::critical(this,tr("Ошибка::"),qrys.lastError().text());
             }
 
 }
@@ -127,7 +127,7 @@ void Stocks::on_tableView_activated(const QModelIndex &index)
 
     QString val = ui->tableView->model()->data(index).toString();
     if(!connOpen()){
-        qDebug()<<"failed to connect to database";
+        qDebug()<<"Ошибка соединие с базой данных";
         return;
     }
     connOpen();
@@ -148,7 +148,7 @@ void Stocks::on_tableView_activated(const QModelIndex &index)
         }
         connClose();
     }else {
-       QMessageBox::critical(this,tr("error::"),qry.lastError().text());
+       QMessageBox::critical(this,tr("Ошибка::"),qry.lastError().text());
     }
 
 }

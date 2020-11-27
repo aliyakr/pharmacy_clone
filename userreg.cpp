@@ -26,15 +26,15 @@ void userreg::on_pushButton_reg_clicked()
     uremail = ui->lineEdit_email->text();
     urphone = ui->lineEdit_phone->text();
         if(!s.connOpen()){
-        qDebug()<<"connection failed";
+        qDebug()<<"Ошибка соединения";
     }
     s.connOpen();
     QSqlQuery qrys;
     qrys.prepare("insert into table_login(uname,upwd,uphone,uemail) values('"+urname+"','"+urpwd+"','"+urphone+"','"+uremail+"')");
     if(qrys.exec()){
-        QMessageBox::information(this,tr("Save"),tr("Saved"));
+        QMessageBox::information(this,tr("Сохранение"),tr("Сохранено"));
         s.connClose();
     }else{
-        QMessageBox::critical(this,tr("error::"),qrys.lastError().text());
+        QMessageBox::critical(this,tr("Ошибка::"),qrys.lastError().text());
 }
 }

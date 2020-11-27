@@ -41,16 +41,16 @@ void Wholesalers::on_pushButton_suppentry_clicked()
     wmedsupply = ui->lineEdit_medsup->text();
 
     if(!s.connOpen()){
-        qDebug()<<"connection failed";
+        qDebug()<<"Ошибка соединения";
     }
     s.connOpen();
     QSqlQuery qrys;
     qrys.prepare("insert into table_supplier(sid,sname,saddress,postal_code,city,country,sphone,semail,smedsupply) values('"+wid+"','"+wname+"','"+waddress+"','"+wpostal+"','"+wcity+"','"+wcntry+"','"+wphone+"','"+wemail+"','"+wmedsupply+"')");
     if(qrys.exec()){
-        QMessageBox::critical(this,tr("Save"),tr("Saved"));
+        QMessageBox::critical(this,tr("Сохранение"),tr("Сохранено"));
         s.connClose();
     }else{
-        QMessageBox::critical(this,tr("error::"),qrys.lastError().text());
+        QMessageBox::critical(this,tr("Ошибка::"),qrys.lastError().text());
 }
 
 }
@@ -78,16 +78,16 @@ void Wholesalers::on_pushButton_delsupplier_clicked()
             wid = ui->lineEdit_id->text();
 
             if(!s.connOpen()){
-                qDebug()<<"connection failed";
+                qDebug()<<"Ошибка соединения";
             }
             s.connOpen();
             QSqlQuery qrys;
             qrys.prepare("delete from table_supplier where sid='"+wid+"'");
             if(qrys.exec()){
-                QMessageBox::critical(this,tr("Delete"),tr("Deleted"));
+                QMessageBox::critical(this,tr("Удаление"),tr("Удалено"));
                 s.connClose();
             }else{
-                QMessageBox::critical(this,tr("error::"),qrys.lastError().text());
+                QMessageBox::critical(this,tr("Ошибка::"),qrys.lastError().text());
             }
 
 }
